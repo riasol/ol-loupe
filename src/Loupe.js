@@ -1,20 +1,6 @@
-const SIZE = [100, 100]
+let SIZE = []
 export default class Loupe {
-    constructor(map) {
-        this.elem = document.createElement('div')
-        this.elem.style.width = `${SIZE[0]}px`
-        this.elem.style.height = `${SIZE[1]}px`
-        this.elem.className = 'ol-unselectable loupe-elem'
-        this.canvas = document.createElement('canvas')
-        this.elem.appendChild(this.canvas)
-        this.canvas.width = this.canvas.height = 100
-        this.ctx = this.canvas.getContext('2d')
-        this.postrender = this.postrender.bind(this)
-        this.mouseEvent = this.mouseEvent.bind(this)
-        this.mapEvent = this.mapEvent.bind(this)
-        this.elem.addEventListener('mousedown', this.mouseEvent)
-        this.elem.addEventListener('mouseup', this.mouseEvent)
-        this.elem.addEventListener('mousewheel', this.mouseEvent)
+    constructor() {
         this.mousePosition = []
         this.scale = 3
         this.hashedUpdate = () => {
@@ -44,7 +30,7 @@ export default class Loupe {
      */
     setMap(map) {
         this.map = map
-        map.getOverlayContainerStopEvent().appendChild(this.elem)
+        this.createGui()
         map.once('postcompose', (e) => {
             this.setupCanvas(e.context.canvas)
         })
@@ -54,6 +40,23 @@ export default class Loupe {
         targetEl.addEventListener('mousemove', this.mouseEvent)
         targetEl.addEventListener('mouseout', this.mouseEvent)
         map.on(['movestart', 'moveend'], this.mapEvent)
+    }
+    createGui(){
+        this.elem = document.createElement('div')
+        this.map.getOverlayContainerStopEvent().appendChild(this.elem)
+        this.elem.className = 'ol-unselectable loupe-elem'
+        const style=getComputedStyle(document.querySelector('.loupe-elem'))
+        SIZE=['width','height'].map(e=>parseInt(style[e]))
+        this.canvas = document.createElement('canvas')
+        this.elem.appendChild(this.canvas)
+        this.canvas.width = this.canvas.height = 100
+        this.ctx = this.canvas.getContext('2d')
+        this.postrender = this.postrender.bind(this)
+        this.mouseEvent = this.mouseEvent.bind(this)
+        this.mapEvent = this.mapEvent.bind(this)
+        this.elem.addEventListener('mousedown', this.mouseEvent)
+        this.elem.addEventListener('mouseup', this.mouseEvent)
+        this.elem.addEventListener('mousewheel', this.mouseEvent)
     }
 
     mouseEvent(e) {
