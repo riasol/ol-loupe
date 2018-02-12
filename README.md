@@ -1,2 +1,3 @@
 Loupe controll for openlayers
-lupe.png
+
+![Loupe example](loupe.png)
