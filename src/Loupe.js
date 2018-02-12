@@ -1,5 +1,3 @@
-import hashed from 'hashed'
-
 const SIZE = [100, 100]
 export default class Loupe {
     constructor(map) {
@@ -19,13 +17,6 @@ export default class Loupe {
         this.elem.addEventListener('mousewheel', this.mouseEvent)
         this.mousePosition = []
         this.scale = 3
-        /*this.hashedUpdate=hashed.register({mousePosition:this.mousePosition},(newState)=>{
-            if(newState.mousePosition && newState.mousePosition.length===2){
-                this.mousePosition=newState.mousePosition
-                this.moving=true
-                this.positionToMouse()
-            }
-        })*/
         this.hashedUpdate = () => {
         }
         this.proxy = new Proxy(this, {
@@ -127,15 +118,8 @@ export default class Loupe {
     }
 
     postrender(mapEvent) {
-        const frameState = mapEvent.frameState;
         this.redrawZoom()
-        if (!frameState) {
-            //this.viewState_ = null;
-        } else {
-            //this.viewState_ = frameState.viewState;
-        }
-        //this.updateElement_();
-    };
+    }
 
     setupCanvas(canvas) {
         this.mapCanvas = canvas
