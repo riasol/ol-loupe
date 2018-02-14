@@ -48,8 +48,8 @@ export default class Loupe {
         const style=getComputedStyle(document.querySelector('.loupe-elem'))
         SIZE=['width','height'].map(e=>parseInt(style[e]))
         this.canvas = document.createElement('canvas')
-        this.elem.appendChild(this.canvas)
-        this.canvas.width = this.canvas.height = 100
+        this.elem.appendChild(this.canvas);
+        ['width' ,'height'].forEach((p,i)=>this.canvas[p]=SIZE[i])
         this.ctx = this.canvas.getContext('2d')
         this.postrender = this.postrender.bind(this)
         this.mouseEvent = this.mouseEvent.bind(this)

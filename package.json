@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server"
+    "start": "webpack-dev-server",
+    "build": "webpack --env.production"
   },
   "author": "",
   "license": "ISC",
@@ -14,12 +15,18 @@
     "ol": "^4.6.4",
     "ol-hashed": "^1.0.2",
     "style-loader": "^0.20.1",
+    "uglifyjs-webpack-plugin": "^1.1.8",
     "webpack": "^3.10.0",
     "webpack-dev-server": "^2.11.1"
   },
-  "babel":{
+  "babel": {
     "plugins": [
-      ["transform-class-properties", { "spec": true }]
+      [
+        "transform-class-properties",
+        {
+          "spec": true
+        }
+      ]
     ]
   }
 }
