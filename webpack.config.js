@@ -5,7 +5,10 @@ module.exports = function (env) {
     const isProd=env && env.production
     return {
 
-        entry: {app: './src/index.js'},
+        entry: {
+            app: './src/index.js'
+            ,demo: './src/demo/index.js'
+        },
         devtool: 'inline-source-map',
         devServer: {
             contentBase: './dist',
@@ -13,7 +16,7 @@ module.exports = function (env) {
         },
         plugins: (function(){return isProd?[new UglifyJSPlugin()]:[]})(),
         output: {
-            filename: 'bundle.js',
+            filename: '[name].bundle.js',
             path: path.resolve(__dirname, 'dist')
         },
         module: {
@@ -22,7 +25,7 @@ module.exports = function (env) {
                     test: /\.css$/,
                     use: [
                         {loader: 'style-loader'},
-                        {loader: 'css-loader'}
+                        {loader: 'css-loader',options:{url:false}}
                     ]
                 }
             ]

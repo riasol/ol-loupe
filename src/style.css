@@ -5,8 +5,8 @@
 .loupe-elem{
     position:absolute;
     z-index:1000;
-    top:10px;
-    right:10px;
+    top:100px;
+    left:100px;
     width:100px;height:100px;/*required*/
 }
 .subview-elem{

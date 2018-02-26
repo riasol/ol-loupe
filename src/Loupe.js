@@ -1,10 +1,12 @@
-let SIZE = []
+/**
+ * Configured in css
+ * @type {Array}
+ */
+let loupeSize = []
 export default class Loupe {
     constructor() {
         this.mousePosition = []
         this.scale = 3
-        this.hashedUpdate = () => {
-        }
         this.proxy = new Proxy(this, {
             set(target, key, value) {
                 if(key==='scale'){
@@ -46,10 +48,10 @@ export default class Loupe {
         this.map.getOverlayContainerStopEvent().appendChild(this.elem)
         this.elem.className = 'ol-unselectable loupe-elem'
         const style=getComputedStyle(document.querySelector('.loupe-elem'))
-        SIZE=['width','height'].map(e=>parseInt(style[e]))
+        loupeSize=['width','height'].map(e=>parseInt(style[e]))
         this.canvas = document.createElement('canvas')
         this.elem.appendChild(this.canvas);
-        ['width' ,'height'].forEach((p,i)=>this.canvas[p]=SIZE[i])
+        ['width' ,'height'].forEach((p,i)=>this.canvas[p]=loupeSize[i])
         this.ctx = this.canvas.getContext('2d')
         this.postrender = this.postrender.bind(this)
         this.mouseEvent = this.mouseEvent.bind(this)
@@ -82,41 +84,42 @@ export default class Loupe {
 
     positionToMouse() {
         if (this.mousePosition && this.moving) {
-            this.drawerCenter = [this.mousePosition[0] - SIZE[0] / 2, this.mousePosition[1] - SIZE[1] / 2]
+            this.drawerCenter = [this.mousePosition[0] - loupeSize[0] / 2, this.mousePosition[1] - loupeSize[1] / 2]
             this.elem.style.left = `${this.drawerCenter[0]}px`
             this.elem.style.top = `${this.drawerCenter[1]}px`
-            delete(this.elem.style.right)
             this.redrawZoom()
-            this.hashedUpdate({mousePosition: this.mousePosition})
         }
     }
 
     mapEvent(e) {
         const type = e.type
+        if(type=='moveend'){
+            this.redrawZoom()
+        }
     }
 
     redrawZoom() {
         if (!this.mapCanvas) return
-        const drawerPos = [parseInt(this.elem.style.left) + SIZE[0] / 2, parseInt(this.elem.style.top) + SIZE[1] / 2]
-        this.ctx.clearRect(0, 0, SIZE[0], SIZE[1])
+        const drawerPos = ['left','top'].map((v,i)=>parseInt(this.elem.style[v]+loupeSize[i] / 2))
+        this.ctx.clearRect(0, 0, loupeSize[0], loupeSize[1])
         const sourcePos = drawerPos.map((p, i) => {
-            return p - SIZE[i] / 2 / this.scale
+            return p - loupeSize[i] / 2 / this.scale
         })
 
         this.ctx.fillStyle = 'white'
         this.ctx.beginPath()
-        this.ctx.arc(SIZE[0] / 2, SIZE[1] / 2, SIZE[0] / 2, 0, 2 * Math.PI, true)
+        this.ctx.arc(loupeSize[0] / 2, loupeSize[1] / 2, loupeSize[0] / 2, 0, 2 * Math.PI, true)
         this.ctx.fill()
 
         this.ctx.strokeStyle = 'orange'
         this.ctx.beginPath()
-        this.ctx.arc(SIZE[0] / 2, SIZE[1] / 2, SIZE[0] / 2 - .5, 0, 2 * Math.PI, true)
+        this.ctx.arc(loupeSize[0] / 2, loupeSize[1] / 2, loupeSize[0] / 2 - .5, 0, 2 * Math.PI, true)
         this.ctx.stroke()
 
-        this.ctx.drawImage(this.mapCanvas, sourcePos[0], sourcePos[1], SIZE[0] / this.scale, SIZE[1] / this.scale, 0, 0, SIZE[0], SIZE[1])
+        this.ctx.drawImage(this.mapCanvas, sourcePos[0], sourcePos[1], loupeSize[0] / this.scale, loupeSize[1] / this.scale, 0, 0, loupeSize[0], loupeSize[1])
 
         this.ctx.beginPath()
-        this.ctx.arc(SIZE[0] / 2, SIZE[1] / 2, SIZE[0] / 2, 0, 2 * Math.PI, true)//TODO SIZE has 2 elements. Here is only for circle
+        this.ctx.arc(loupeSize[0] / 2, loupeSize[1] / 2, loupeSize[0] / 2, 0, 2 * Math.PI, true)//TODO SIZE has 2 elements. Here is only for circle
         this.ctx.clip()
     }
 

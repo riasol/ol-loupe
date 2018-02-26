@@ -1,6 +1,6 @@
 # Openlayers extensions
 
-## Loupe controll for openlayers
+## Loupe control for openlayers
 
 ![Loupe example](loupe.png)
 

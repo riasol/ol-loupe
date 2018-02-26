@@ -1,17 +1,18 @@
 {
   "name": "ol-loupe",
   "version": "1.0.0",
-  "description": "",
+  "description": "Loupe control for openlayers",
   "main": "index.js",
   "scripts": {
     "start": "webpack-dev-server",
     "build": "webpack --env.production"
   },
-  "author": "",
+  "author": "RobertW",
   "license": "ISC",
   "devDependencies": {
     "css-loader": "^0.28.9",
     "hashed": "^4.2.0",
+    "jquery": "^3.3.1",
     "ol": "^4.6.4",
     "ol-hashed": "^1.0.2",
     "style-loader": "^0.20.1",
