@@ -7,7 +7,6 @@ module.exports = function (env) {
 
         entry: {
             app: './src/index.js'
-            ,demo: './src/demo/index.js'
         },
         devtool: 'inline-source-map',
         devServer: {

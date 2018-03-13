@@ -1,33 +1,37 @@
 {
   "name": "ol-loupe",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Loupe control for openlayers",
-  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:riasol/ol-loupe.git"
+  },
+  "main": "src/Loupe.js",
   "scripts": {
     "start": "webpack-dev-server",
     "build": "webpack --env.production"
   },
   "author": "RobertW",
   "license": "ISC",
+  "files": [
+    "src/Loupe.js",
+    "src/style.css"
+  ],
+  "dependencies": {
+    "ol": "^4.6.4"
+  },
   "devDependencies": {
+    "babel": "^6.23.0",
+    "babel-jest": "^22.4.1",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-preset-env": "^1.6.1",
     "css-loader": "^0.28.9",
     "hashed": "^4.2.0",
-    "jquery": "^3.3.1",
-    "ol": "^4.6.4",
+    "jest": "^22.4.2",
     "ol-hashed": "^1.0.2",
     "style-loader": "^0.20.1",
     "uglifyjs-webpack-plugin": "^1.1.8",
     "webpack": "^3.10.0",
     "webpack-dev-server": "^2.11.1"
-  },
-  "babel": {
-    "plugins": [
-      [
-        "transform-class-properties",
-        {
-          "spec": true
-        }
-      ]
-    ]
   }
 }

@@ -1,25 +1,19 @@
-# ol-loupe
-
-Loupe control for openlayers
-
-## Installation
-
-    npm install ol ol-loupe
-
-## Usage
-
-```js
 import Map from 'ol/map'
 import View from 'ol/view'
 import TileLayer from 'ol/layer/tile'
 import OSMSource from 'ol/source/osm'
+
+import sync from 'ol-hashed';
+import Loupe from './Loupe'
+
+import './style.css'
 import 'ol/ol.css'
 
-import Loupe from 'ol-loupe'
-import 'ol-loupe/style.css' //Or your own
+
 
 const tileLayer=new TileLayer({
-    source: new OSMSource()
+    source: new OSMSource(),
+    name:'osm'
 })
 const map = new Map({
     layers: [tileLayer],
@@ -30,5 +24,4 @@ const map = new Map({
     target:'map'
 })
 map.addControl(new Loupe())
-```
-
+sync(map, { animate: false })
