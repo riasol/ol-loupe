@@ -44,25 +44,26 @@ ${c[0] - s / 2} ${c[1] + s / 2},
 ${c[0] - s / 2} ${c[1] - s / 2}))`
     const figure = new WKT().readFeature(polyText)
     vectorSource.addFeature(figure)
-// const select = new Select()
-// map.addInteraction(select)
+    const select = new Select()
+    map.addInteraction(select)
     const modify = new Modify({
-        source: vectorSource
+        features: select.getFeatures()
     })
-    let start
+    let start,selectSource
     modify.on('modifystart', (e) => {
-        start = e.features.getArray()[0].clone()
         console.log('modifystart')
+        try{
+            selectSource=select.getLayer(e.features.getArray()[0]).getSource()
+        }catch(e){}
+        start = e.features.getArray()[0].clone()
     })
     modify.on('modifyend', (e) => {
-        // e.features = start
-        //vectorSource.removeFeature(e.features.getArray()[0])
-        //vectorSource.removeFeature(figure)
-        vectorSource.removeFeature(e.features.getArray()[0])
-        //vectorSource.addFeature(figure)
-        vectorSource.addFeature(start)
         console.log('modifyend')
-        // alert('Prevent change')
+        selectSource.removeFeature(e.features.getArray()[0])
+        select.getFeatures().remove(e.features.getArray()[0])
+        select.getFeatures().push(start)
+        selectSource.addFeature(start)
+        //console.log(selectSource)
     })
     map.addInteraction(modify)
 })
